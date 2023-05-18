@@ -1,4 +1,4 @@
-**Description:**
+# Description:
 
 The JobScoutTwitterAPIbot is a Python script that automates the process of posting job openings to Twitter. It fetches job data from a custom API, constructs tweets with relevant job information, and posts them to a Twitter account using the Tweepy library. The bot also includes functionality to shorten URLs using the TinyURL API to fit within Twitter's character limit.
 
