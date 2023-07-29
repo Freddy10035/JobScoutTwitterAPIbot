@@ -3,6 +3,7 @@ import time
 import requests
 from dotenv import load_dotenv
 from tweepy import Client
+import random
 
 load_dotenv()
 
@@ -69,8 +70,20 @@ max_jobs_per_category = 5
 # Initialize a dictionary to store the count of jobs posted for each category
 jobs_per_category = {category: 0 for category in categories_to_post}
 
+# Randomize the jobs list
+random.shuffle(jobs['data'])
+
+# Set to keep track of posted job IDs
+posted_job_ids = set()
+
 # Loop through each job and post it to Twitter
 for job in jobs['data']:
+    job_id = job['id'] 
+
+    # Check if the job has already been posted (using the job_id)
+    if job_id in posted_job_ids:
+        continue
+
     job_title = job['job_title']
     company_name = job['company_name']
     job_location = job['job_location']
@@ -103,6 +116,7 @@ for job in jobs['data']:
             client.create_tweet(text=tweet)
             print("Tweet posted successfully:\n", tweet)
             tweet_count += 1
+            posted_job_ids.add(job_id)
             time.sleep(5)
         except Exception as e:
             print("An error occurred while posting the tweet:", str(e))
